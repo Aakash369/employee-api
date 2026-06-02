@@ -25,4 +25,7 @@ public class Employee {
 
     @Column(name = "dob", nullable = false)
     private LocalDate dob;
+
+    @Column(name = "salary", nullable = false)
+    private Double salary;
 }
