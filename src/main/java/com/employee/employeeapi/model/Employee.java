@@ -28,4 +28,7 @@ public class Employee {
 
     @Column(name = "salary", nullable = false)
     private Double salary;
+
+    @Column(name = "tax", nullable = false)
+    private Double tax;
 }
