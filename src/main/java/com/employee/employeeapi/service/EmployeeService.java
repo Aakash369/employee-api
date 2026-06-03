@@ -15,6 +15,21 @@ public class EmployeeService {
 
     // CREATE
     public Employee createEmployee(Employee employee) {
+        if (employee.getEmployeeId() == null || employee.getEmployeeId().isEmpty()) {
+            throw new IllegalArgumentException("Employee ID cannot be empty!");
+        }
+        if (employee.getName() == null || employee.getName().isEmpty()) {
+            throw new IllegalArgumentException("Employee name cannot be empty!");
+        }
+        if (employee.getAddress() == null || employee.getAddress().isEmpty()) {
+            throw new IllegalArgumentException("Employee address cannot be empty!");
+        }
+        if (employee.getDob() == null) {
+            throw new IllegalArgumentException("Employee date of birth cannot be empty!");
+        }
+        if (employeeRepository.existsById(employee.getEmployeeId())) {
+            throw new RuntimeException("Employee with ID " + employee.getEmployeeId() + " already exists!");
+        }
         return employeeRepository.save(employee);
     }
 
@@ -36,6 +51,9 @@ public class EmployeeService {
 
     // DELETE
     public void deleteEmployee(String employeeId) {
+        if (!employeeRepository.existsById(employeeId)) {
+            throw new RuntimeException("Employee with ID " + employeeId + " not found!");
+        }
         employeeRepository.deleteById(employeeId);
     }
 }

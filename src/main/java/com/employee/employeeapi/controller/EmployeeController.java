@@ -17,8 +17,15 @@ public class EmployeeController {
 
     // CREATE - POST /api/employees
     @PostMapping
-    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
-        return new ResponseEntity<>(employeeService.createEmployee(employee), HttpStatus.CREATED);
+    public ResponseEntity<?> createEmployee(@RequestBody Employee employee) {
+        try {
+            Employee created = employeeService.createEmployee(employee);
+            return new ResponseEntity<>(created, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
     }
 
     // READ ALL - GET /api/employees
@@ -43,8 +50,12 @@ public class EmployeeController {
 
     // DELETE - DELETE /api/employees/{id}
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable String id) {
-        employeeService.deleteEmployee(id);
-        return ResponseEntity.ok("Employee " + id + " deleted successfully");
+    public ResponseEntity<?> deleteEmployee(@PathVariable String id) {
+        try {
+            employeeService.deleteEmployee(id);
+            return ResponseEntity.ok("Employee " + id + " deleted successfully");
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
-}
+    }

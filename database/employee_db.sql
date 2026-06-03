@@ -13,8 +13,8 @@ CREATE TABLE IF NOT EXISTS employee (
     );
 
 -- Insert dummy data
-INSERT INTO employee VALUES ('EMP001', 'Alice Johnson', '123 Main St, Dallas, TX', '1990-04-15', 75000.00, 8.0);
-INSERT INTO employee VALUES ('EMP002', 'Bob Smith', '456 Oak Ave, Austin, TX', '1985-07-22', 82000.00, 8.0);
-INSERT INTO employee VALUES ('EMP003', 'Carol White', '789 Pine Rd, Houston, TX', '1992-11-03', 90000.00, 8.0);
-INSERT INTO employee VALUES ('EMP004', 'David Brown', '321 Elm St, San Antonio, TX', '1988-02-28', 68000.00, 8.0);
-INSERT INTO employee VALUES ('EMP005', 'Eva Martinez', '654 Maple Dr, Fort Worth, TX', '1995-09-10', 95000.00, 8.0);
+INSERT INTO employee VALUES ('EMP001', 'Aarav Sharma', 'Sector 21, Dwarka, New Delhi', '1992-03-15', 75000.00, 8.0);
+INSERT INTO employee VALUES ('EMP002', 'Priya Patel', 'Koramangala, Bangalore, Karnataka', '1995-07-22', 82000.00, 8.0);
+INSERT INTO employee VALUES ('EMP003', 'Rohit Verma', 'Andheri West, Mumbai, Maharashtra', '1990-11-03', 90000.00, 8.0);
+INSERT INTO employee VALUES ('EMP004', 'Sneha Reddy', 'Banjara Hills, Hyderabad, Telangana', '1988-02-28', 68000.00, 8.0);
+INSERT INTO employee VALUES ('EMP005', 'Karan Mehta', 'Salt Lake City, Kolkata, West Bengal', '1993-09-10', 95000.00, 8.0);

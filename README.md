@@ -38,6 +38,41 @@ API runs at: `http://localhost:8080`
 | PUT | /api/employees/{id} | Update employee |
 | DELETE | /api/employees/{id} | Delete employee |
 
+## API Test Results
+
+### 1. Get All Employees
+- **Request:** GET /api/employees
+- **Response:** 200 OK
+  ![Get All Employees](images/Get-allEmployees.jpg)
+
+### 2. Get Employee By ID
+- **Request:** GET /api/employees/EMP001
+- **Response:** 200 OK
+  ![Get Employee By ID](images/Get-employeeByID.jpg)
+
+### 3. Create Employee
+- **Request:** POST /api/employees
+- **Response:** 201 Created
+  ![Create Employee](images/Post-createEmployee.jpg)
+
+### 4. Duplicate ID Error
+- **Request:** POST /api/employees (with existing ID)
+- **Response:** 409 Conflict
+- **Message:** `Employee with ID already exists!`
+  ![Duplicate Error](images/Employee-Duplication.jpg)
+
+### 5. Delete Non-Existing Employee
+- **Request:** DELETE /api/employees/EMP999
+- **Response:** 404 Not Found
+- **Message:** `Employee with ID not found!`
+  ![Delete Not Found](images/Delete-nonExistFeild.jpg)
+
+### 6. Empty Employee Creation
+- **Request:** POST /api/employees with empty body
+- **Response:** 400 Bad Request
+- **Message:** `Employee ID cannot be empty!`
+  ![Empty Body Error](images/Not-Null.jpg)
+
 ## Example JSON
 ```json
 {
