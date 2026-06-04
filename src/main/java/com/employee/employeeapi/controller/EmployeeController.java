@@ -58,4 +58,14 @@ public class EmployeeController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+
+    // ELIGIBILITY CHECK - GET /api/employees/{id}/eligibility
+    @GetMapping("/{id}/eligibility")
+    public ResponseEntity<?> checkEligibility(@PathVariable String id) {
+        try {
+            return ResponseEntity.ok(employeeService.checkEligibility(id));
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
     }

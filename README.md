@@ -73,14 +73,23 @@ API runs at: `http://localhost:8080`
 - **Message:** `Employee ID cannot be empty!`
   ![Empty Body Error](images/Not-Null.jpg)
 
-## Example JSON
+
+#### Example Response:
 ```json
 {
-  "employeeId": "EMP001",
-  "name": "Alice Johnson",
-  "address": "123 Main St, Dallas, TX",
-  "dob": "1990-04-15",
-  "salary": 75000.0,
-  "tax": 8.0
+  "employeeId": "EMP006",
+  "name": "Aakash Sagar",
+  "age": 25,
+  "eligible": true,
+  "status": "Eligible",
+  "reason": "Age 25 is within eligible range (25-45)."
 }
 ```
+
+## Test Employees for Eligibility
+| Employee ID | Name | DOB | Age | Expected Status |
+|-------------|------|-----|-----|-----------------|
+| EMP006 | Aakash Sagar | 2001-06-04 | 25 (today!) | ✅ Eligible (Boundary Case) |
+| EMP009 | Young Test | 2005-01-01 | 21 | ❌ Ineligible (Too Young) |
+| EMP010 | Mid Test | 1975-01-01 | 51 | ✅ Considerable (45-55) |
+| EMP011 | Senior Test | 1965-01-01 | 61 | ❌ Ineligible (Too Old) |
