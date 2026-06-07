@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import org.kie.api.runtime.KieSession;
 
 import com.employee.employeeapi.model.EligibilityResponse;
 import java.time.LocalDate;
@@ -61,46 +62,30 @@ public class EmployeeService {
         employeeRepository.deleteById(employeeId);
     }
 
-    // ELIGIBILITY CHECK
+    @Autowired
+    private KieSession kieSession;
+
+    // ELIGIBILITY CHECK WITH DROOLS
     public EligibilityResponse checkEligibility(String employeeId) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new RuntimeException("Employee with ID " + employeeId + " not found!"));
 
-        // Calculate age based on today's date
-        LocalDate today = LocalDate.now();
-        LocalDate dob = employee.getDob();
-        int age = Period.between(dob, today).getYears();
+        EligibilityResponse response = new EligibilityResponse();
+        response.setEmployeeId(employee.getEmployeeId());
+        response.setName(employee.getName());
+        response.setAge(employee.getAge());
 
-        String status;
-        String reason;
-        boolean eligible;
+        // Insert facts into Drools
+        kieSession.insert(employee);
+        kieSession.insert(response);
 
-        if (age < 25) {
-            eligible = false;
-            status = "Ineligible";
-            reason = "Age " + age + " is too young. Minimum age is 25.";
-        } else if (age <= 45) {
-            eligible = true;
-            status = "Eligible";
-            reason = "Age " + age + " is within eligible range (25-45).";
-        } else if (age <= 55) {
-            eligible = true;
-            status = "Considerable";
-            reason = "Age " + age + " is considerable for eligibility (45-55).";
-        } else {
-            eligible = false;
-            status = "Ineligible";
-            reason = "Age " + age + " exceeds maximum age limit of 55.";
-        }
+        // Fire all matching rules
+        kieSession.fireAllRules();
 
-        return new EligibilityResponse(
-                employee.getEmployeeId(),
-                employee.getName(),
-                age,
-                eligible,
-                status,
-                reason
-        );
+        // Clean up session
+        kieSession.dispose();
+
+        return response;
     }
 
 }

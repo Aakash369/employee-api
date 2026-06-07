@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
+import java.time.Period;
 
 @Entity
 @Table(name = "employee")
@@ -31,4 +32,12 @@ public class Employee {
 
     @Column(name = "tax", nullable = false)
     private Double tax;
+
+    @Transient
+    private int age;
+
+    public int getAge() {
+        if (this.dob == null) return 0;
+        return Period.between(this.dob, LocalDate.now()).getYears();
+    }
 }

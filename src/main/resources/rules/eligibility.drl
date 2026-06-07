@@ -1,0 +1,44 @@
+package rules;
+
+import com.employee.employeeapi.model.Employee;
+import com.employee.employeeapi.model.EligibilityResponse;
+
+rule "Too Young - Ineligible"
+when
+    $e : Employee(age < 25)
+    $r : EligibilityResponse()
+then
+    $r.setEligible(false);
+    $r.setStatus("Ineligible");
+    $r.setReason("Age " + $e.getAge() + " is too young. Minimum age is 25.");
+end
+
+rule "Eligible"
+when
+    $e : Employee(age >= 25 && age <= 45)
+    $r : EligibilityResponse()
+then
+    $r.setEligible(true);
+    $r.setStatus("Eligible");
+    $r.setReason("Age " + $e.getAge() + " is within eligible range (25-45).");
+end
+
+rule "Considerable"
+when
+    $e : Employee(age > 45 && age <= 55)
+    $r : EligibilityResponse()
+then
+    $r.setEligible(true);
+    $r.setStatus("Considerable");
+    $r.setReason("Age " + $e.getAge() + " is considerable for eligibility (45-55).");
+end
+
+rule "Too Old - Ineligible"
+when
+    $e : Employee(age > 55)
+    $r : EligibilityResponse()
+then
+    $r.setEligible(false);
+    $r.setStatus("Ineligible");
+    $r.setReason("Age " + $e.getAge() + " exceeds maximum age limit of 55.");
+end
